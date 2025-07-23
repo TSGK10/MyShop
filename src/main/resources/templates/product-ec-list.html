@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>商品一覧（ECサイト）</title>
+        <div th:insert="header :: header"></div>
+    </head>
+    <body>
+        <h1>商品一覧</h1>
+
+        <!-- 検索フォーム -->
+        <form th:action="@{/products/search}" method="get">
+            <input type="text" name="keyword" placeholder="商品名・カテゴリで検索" />
+            <button type="submit">検索</button>
+        </form>
+
+        <!-- 商品一覧表示 -->
+        <div th:each="product : ${products}" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+            <p><strong th:text="${product.productName}">商品名</strong></p>
+            <p th:text="'カテゴリ: ' + ${product.productCategory}">カテゴリ</p>
+            <p th:text="'価格: ¥' + ${product.salePrice}">価格</p>
+            <p th:text="'在庫数: ' + ${product.quantity}">在庫数</p>
+            <a th:href="@{'/products/detail/' + ${product.productId}}">詳細を見る</a>
+        </div>
+        <a th:href="@{/products}">
+            <button type="button">商品一覧にもどる</button>
+        </a>
+    </body>
+</html>

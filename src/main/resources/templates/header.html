@@ -1,0 +1,10 @@
+<header th:fragment="header" xmlns:th="">
+    <div>
+  <span th:if="${session.userName != null}">
+    ログイン中：<a th:href="@{/purchase-history}" th:text="${session.userName}">ユーザー名</a>
+  </span>
+        <span th:unless="${session.userName != null}">
+    未ログイン
+  </span>
+    </div>
+</header>

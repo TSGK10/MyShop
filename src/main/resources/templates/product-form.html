@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品登録・編集</title>
+    <div th:insert="header :: header"></div>
+</head>
+<body>
+<form th:action="@{${product.productId} != null ? '/products/update' : '/products/add'}" method="post" th:object="${product}">
+    <input type="hidden" th:field="*{productId}" />
+
+    <label>商品カテゴリ:</label>
+    <input type="text" th:field="*{productCategory}" required />
+
+    <label>商品名:</label>
+    <input type="text" th:field="*{productName}" required />
+
+    <label>定価:</label>
+    <input type="number" th:field="*{listPrice}" required />
+
+    <label>販売価格:</label>
+    <input type="number" th:field="*{salePrice}" />
+
+    <label>販売開始日:</label>
+    <input type="date" th:field="*{saleStartDate}" />
+
+    <label>販売終了日:</label>
+    <input type="date" th:field="*{saleEndDate}" />
+
+    <label>在庫数:</label>
+    <input type="number" th:field="*{quantity}" />
+
+    <button type="submit" th:if="${product.productId} != null">更新</button>
+    <button type="submit" th:unless="${product.productId} != null">登録</button>
+
+
+    <a th:href="@{/products}">
+        <button type="button">商品一覧にもどる</button>
+    </a>
+</form>
+
+</body>
+</html>

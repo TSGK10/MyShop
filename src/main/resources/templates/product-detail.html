@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+      <title>商品詳細</title>
+    <div th:insert="header :: header"></div>
+  </head>
+  <body>
+  <h1>商品詳細</h1>
+
+  <div style="border: 1px solid #ccc; padding: 20px; margin: 20px;">
+    <p><strong>商品名:</strong> <span th:text="${product.productName}">商品名</span></p>
+    <p><strong>カテゴリ:</strong> <span th:text="${product.productCategory}">カテゴリ</span></p>
+    <p><strong>販売価格:</strong> ¥<span th:text="${product.salePrice}">販売価格</span></p>
+  </div>
+
+  <form action="/products/purchase" method="post">
+    <input type="hidden" name="productId" th:value="${product.productId}" />
+    <label>数量:</label>
+    <input type="number" name="quantity" min="1" th:attr="max=${product.quantity}" required>
+
+    <button type="submit">購入する</button>
+  </form>
+
+  <a th:href="@{/products/ec}">
+    <button type="button">商品一覧にもどる</button>
+  </a>
+  </body>
+</html>

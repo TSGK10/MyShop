@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>購入詳細</h2>
+<table>
+  <tr>
+    <th>商品ID</th>
+    <th>商品名</th>
+    <th>数量</th>
+    <th>金額</th>
+  </tr>
+  <tr>
+    <td>
+      <a th:href="@{/products/detail/{id}(id=${product.productId})}" th:text="${product.productId}"></a>
+    </td>
+    <td th:text="${product.productName}">商品名</td>
+    <td th:text="${history.quantity}">数量</td>
+    <td th:text="${totalPrice}">金額</td>
+  </tr>
+</table>
+<a th:href="@{/purchase-history}">購入履歴一覧に戻る</a>
+
+</body>
+</html>
