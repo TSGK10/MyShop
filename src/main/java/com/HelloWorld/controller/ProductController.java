@@ -103,6 +103,8 @@ public class ProductController {
 
     @GetMapping("/purchase-history")
     public String showPurchaseHistory(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "sort", defaultValue = "desc") String sort,
             HttpSession session,
             Model model) {
@@ -112,10 +114,16 @@ public class ProductController {
             return "redirect:/login";
         }
 
-        List<PurchaseHistory> historyList = purchaseHistoryService.getHistoryByUserIdSorted(userId, sort);
+        // 総件数とページ数の計算
+        int totalCount = purchaseHistoryService.countByUserId(userId);
+        int totalPages = (int) Math.ceil((double) totalCount / size);
+
+        // ページングされた履歴取得
+        List<PurchaseHistory> historyList = purchaseHistoryService.getHistoryByUserIdPaged(userId, page, size);
+
+        // 日付フォーマットと表示用リスト作成
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         List<Map<String, Object>> displayList = new ArrayList<>();
-
         for (PurchaseHistory history : historyList) {
             Map<String, Object> map = new HashMap<>();
             map.put("id", history.getId());
@@ -124,6 +132,10 @@ public class ProductController {
         }
 
         model.addAttribute("historyList", displayList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("sort", sort);
+
         return "purchase-history";
     }
 

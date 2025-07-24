@@ -54,5 +54,29 @@ public interface PurchaseHistoryMapper {
     })
     List<PurchaseHistory> findByUserIdOrderByDateDesc(Integer userId);
 
+    @Select("""
+SELECT * FROM purchase_history
+WHERE user_id = #{userId}
+ORDER BY purchase_date DESC
+LIMIT #{limit} OFFSET #{offset}
+""")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "productId", column = "product_id"),
+            @Result(property = "quantity", column = "quantity"),
+            @Result(property = "purchaseDate", column = "purchase_date")
+    })
+    List<PurchaseHistory> findByUserIdPaged(@Param("userId") Integer userId,
+                                            @Param("limit") int limit,
+                                            @Param("offset") int offset);
+
+    @Select("SELECT COUNT(*) AS total_count FROM purchase_history WHERE user_id = #{userId}")
+    @Results({
+            @Result(property = "totalCount", column = "total_count")
+    })
+    int countByUserId(@Param("userId") Integer userId);
+
+
 }
 

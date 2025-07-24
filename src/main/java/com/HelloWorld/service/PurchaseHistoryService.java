@@ -41,4 +41,14 @@ public class PurchaseHistoryService {
         }
     }
 
+    public List<PurchaseHistory> getHistoryByUserIdPaged(Integer userId, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return mapper.findByUserIdPaged(userId, pageSize, offset);
+    }
+
+    public int countByUserId(Integer userId) {
+        return mapper.countByUserId(userId);
+    }
+
+
 }

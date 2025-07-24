@@ -1,29 +1,32 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>購入履歴</title>
 </head>
 <body>
 <h2>購入履歴一覧</h2>
-
-<form method="get" action="/purchase-history">
-    <button type="submit" name="sort" value="asc">昇順</button>
-    <button type="submit" name="sort" value="desc">降順</button>
+<form action="/purchase-history" method="get">
+    <button name="sort" type="submit" value="asc">昇順</button>
+    <button name="sort" type="submit" value="desc">降順</button>
 </form>
-
 <table border="1">
     <tr>
         <th>購入日</th>
     </tr>
     <tr th:each="history : ${historyList}">
         <td>
-            <a th:href="@{'/purchase-history/detail/' + ${history.id}}"
-               th:text="${history.formattedDate}">購入日</a>
+            <a th:href="@{'/purchase-history/detail/' + ${history.id}}" th:text="${history.formattedDate}">購入日</a>
         </td>
     </tr>
 </table>
+<br/>
 
-<br>
+<div>
+    <a th:href="@{/purchase-history(page=${currentPage - 1}, sort=${sort})}" th:if="${currentPage &gt; 1}">前へ</a>
+    <span>ページ <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
+    <a th:href="@{/purchase-history(page=${currentPage + 1}, sort=${sort})}" th:if="${currentPage &lt; totalPages}">次へ</a>
+</div>
 <a href="/products/ec">商品一覧に戻る</a>
 </body>
 </html>
