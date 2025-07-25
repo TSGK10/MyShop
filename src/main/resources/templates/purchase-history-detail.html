@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>購入履歴詳細</title>
 </head>
 <body>
 <h2>購入詳細</h2>
-<table>
+
+<table border="1">
   <tr>
     <th>商品ID</th>
     <th>商品名</th>
@@ -14,15 +14,23 @@
     <th>金額</th>
   </tr>
   <tr>
-    <td>
-      <a th:href="@{/products/detail/{id}(id=${product.productId})}" th:text="${product.productId}"></a>
-    </td>
+    <td th:text="${product.productId}">商品ID</td>
     <td th:text="${product.productName}">商品名</td>
     <td th:text="${history.quantity}">数量</td>
     <td th:text="${totalPrice}">金額</td>
   </tr>
 </table>
-<a th:href="@{/purchase-history}">購入履歴一覧に戻る</a>
 
+<!-- キャンセルフォーム -->
+<h3>購入をキャンセルする</h3>
+<form th:action="@{/orders/cancel}" method="post">
+  <input type="hidden" name="orderId" th:value="${history.id}" />
+  <label for="reason">キャンセル理由:</label>
+  <input type="text" id="reason" name="reason" required />
+  <button type="submit">キャンセル</button>
+</form>
+
+<br>
+<a href="/purchase-history">購入履歴一覧に戻る</a>
 </body>
 </html>

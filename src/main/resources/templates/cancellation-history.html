@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>キャンセル履歴</title>
+</head>
+<body>
+<h2>キャンセル履歴一覧</h2>
+
+<table border="1">
+    <tr>
+        <th>キャンセル日</th>
+        <th>理由</th>
+        <th>注文ID</th>
+    </tr>
+    <tr th:each="cancel : ${cancellationList}">
+        <td th:text="${#dates.format(cancel.cancelDate, 'yyyy-MM-dd HH:mm')}">キャンセル日</td>
+        <td th:text="${cancel.reason}">理由</td>
+        <td th:text="${cancel.orderId}">注文ID</td>
+    </tr>
+</table>
+
+<br>
+<a href="/products/ec">商品一覧に戻る</a>
+</body>
+</html>

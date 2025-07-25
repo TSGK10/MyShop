@@ -77,6 +77,5 @@ LIMIT #{limit} OFFSET #{offset}
     })
     int countByUserId(@Param("userId") Integer userId);
 
-
 }
 
