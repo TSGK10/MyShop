@@ -34,7 +34,12 @@ public interface PurchaseHistoryMapper {
     })
     PurchaseHistory findById(Long id);
 
-    @Select("SELECT * FROM purchase_history WHERE user_id = #{userId} ORDER BY purchase_date ASC")
+    @Select("""
+SELECT * FROM purchase_history
+WHERE user_id = #{userId}
+ORDER BY purchase_date ASC
+LIMIT #{limit} OFFSET #{offset}
+""")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "userId", column = "user_id"),
@@ -42,9 +47,14 @@ public interface PurchaseHistoryMapper {
             @Result(property = "quantity", column = "quantity"),
             @Result(property = "purchaseDate", column = "purchase_date")
     })
-    List<PurchaseHistory> findByUserIdOrderByDateAsc(Integer userId);
+    List<PurchaseHistory> findByUserIdPagedAsc(@Param("userId") Integer userId, @Param("limit") int limit, @Param("offset") int offset);
 
-    @Select("SELECT * FROM purchase_history WHERE user_id = #{userId} ORDER BY purchase_date DESC")
+    @Select("""
+SELECT * FROM purchase_history
+WHERE user_id = #{userId}
+ORDER BY purchase_date DESC
+LIMIT #{limit} OFFSET #{offset}
+""")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "userId", column = "user_id"),
@@ -52,7 +62,7 @@ public interface PurchaseHistoryMapper {
             @Result(property = "quantity", column = "quantity"),
             @Result(property = "purchaseDate", column = "purchase_date")
     })
-    List<PurchaseHistory> findByUserIdOrderByDateDesc(Integer userId);
+    List<PurchaseHistory> findByUserIdPagedDesc(@Param("userId") Integer userId, @Param("limit") int limit, @Param("offset") int offset);
 
     @Select("""
 SELECT * FROM purchase_history

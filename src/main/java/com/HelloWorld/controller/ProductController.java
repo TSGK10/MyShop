@@ -119,7 +119,7 @@ public class ProductController {
         int totalPages = (int) Math.ceil((double) totalCount / size);
 
         // ページングされた履歴取得
-        List<PurchaseHistory> historyList = purchaseHistoryService.getHistoryByUserIdPaged(userId, page, size);
+        List<PurchaseHistory> historyList = purchaseHistoryService.getHistoryByUserIdPagedSorted(userId, page, size, sort);
 
         // 日付フォーマットと表示用リスト作成
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

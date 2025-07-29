@@ -25,9 +25,9 @@
 <br/>
 
 <div>
-    <a th:href="@{/purchase-history(page=${currentPage - 1}, sort=${sort})}" th:if="${currentPage &gt; 1}">前へ</a>
+    <a th:href="@{/purchase-history(page=${currentPage - 1}, size=${size}, sort=${sort})}" th:if="${currentPage > 1}">前へ</a>
     <span>ページ <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
-    <a th:href="@{/purchase-history(page=${currentPage + 1}, sort=${sort})}" th:if="${currentPage &lt; totalPages}">次へ</a>
+    <a th:href="@{/purchase-history(page=${currentPage + 1}, size=${size}, sort=${sort})}" th:if="${currentPage < totalPages}">次へ</a>
 </div>
 <a href="/products/ec">商品一覧に戻る</a>
 </body>

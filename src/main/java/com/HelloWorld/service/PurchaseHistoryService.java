@@ -33,11 +33,12 @@ public class PurchaseHistoryService {
         return mapper.findById(id);
     }
 
-    public List<PurchaseHistory> getHistoryByUserIdSorted(Integer userId, String sort) {
+    public List<PurchaseHistory> getHistoryByUserIdPagedSorted(Integer userId, int page, int pageSize, String sort) {
+        int offset = (page - 1) * pageSize;
         if ("asc".equalsIgnoreCase(sort)) {
-            return mapper.findByUserIdOrderByDateAsc(userId);
+            return mapper.findByUserIdPagedAsc(userId, pageSize, offset);
         } else {
-            return mapper.findByUserIdOrderByDateDesc(userId);
+            return mapper.findByUserIdPagedDesc(userId, pageSize, offset);
         }
     }
 
