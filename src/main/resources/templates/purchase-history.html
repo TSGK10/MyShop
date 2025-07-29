@@ -7,6 +7,8 @@
 <body>
 <h2>購入履歴一覧</h2>
 <form action="/purchase-history" method="get">
+    <input type="hidden" name="page" th:value="${currentPage}" />
+    <input type="hidden" name="size" th:value="${size}" />
     <button name="sort" type="submit" value="asc">昇順</button>
     <button name="sort" type="submit" value="desc">降順</button>
 </form>
