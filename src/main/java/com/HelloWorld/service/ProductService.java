@@ -17,6 +17,7 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
+    @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
         List<Product> list = productMapper.findAll();
         return list != null ? list : new ArrayList<>();
@@ -34,6 +35,7 @@ public class ProductService {
     }
 
 
+    @Transactional(readOnly = true)
     public Product getProductById(int id) {
         return productMapper.findById(id);
     }
@@ -43,6 +45,7 @@ public class ProductService {
         productMapper.updateProduct(product);
     }
 
+    @Transactional(readOnly = true)
     public List<Product> searchProducts(String keyword) {
         return productMapper.searchByKeyword(keyword);
     }
