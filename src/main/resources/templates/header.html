@@ -1,10 +1,14 @@
-<header th:fragment="header" xmlns:th="">
-    <div>
-  <span th:if="${session.userName != null}">
-    ログイン中：<a th:href="@{/purchase-history}" th:text="${session.userName}">ユーザー名</a>
-  </span>
-        <span th:unless="${session.userName != null}">
-    未ログイン
-  </span>
-    </div>
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+  <div class="header">
+    <span th:if="${session.userId != null}">
+      ログイン中：<span th:text="${session.userName}">ユーザー名</span>
+      |
+      <a th:href="@{/purchase-history}">購入履歴</a>
+      |
+      <a th:href="@{/logout}">ログアウト</a>
+    </span>
+    <span th:if="${session.userId == null}">
+      <a th:href="@{/login}">ログイン</a>
+    </span>
+  </div>
 </header>

@@ -86,18 +86,19 @@ public class ProductController {
                                   @RequestParam("quantity") Integer quantity,
                                   HttpSession session,
                                   Model model) {
-
         Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login"; // 未ログインならログインページへ
+        }
+
+        // ログイン済みなら購入処理を続行
         Product product = productService.getProductById(productId);
-
         purchaseHistoryService.savePurchase(userId, productId, quantity);
-
         product.setQuantity(product.getQuantity() - quantity);
         productService.updateProduct(product);
 
         model.addAttribute("product", product);
         model.addAttribute("quantity", quantity);
-
         return "purchase-complete";
     }
 
