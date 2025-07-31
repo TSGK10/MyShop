@@ -1,7 +1,10 @@
 
 package com.HelloWorld.controller;
 
+import com.HelloWorld.model.Cart;
+import com.HelloWorld.model.CartProduct;
 import com.HelloWorld.model.PurchaseHistory;
+import com.HelloWorld.service.CartService;
 import com.HelloWorld.service.ProductService;
 import com.HelloWorld.service.PurchaseHistoryService;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +19,8 @@ import java.util.*;
 
 @Controller
 public class ProductController {
-
+    @Autowired
+    private CartService cartService;
     @Autowired
     private ProductService productService;
 
@@ -82,23 +86,33 @@ public class ProductController {
     private PurchaseHistoryService purchaseHistoryService;
 
     @PostMapping("/products/purchase")
-    public String purchaseProduct(@RequestParam("productId") Integer productId,
-                                  @RequestParam("quantity") Integer quantity,
-                                  HttpSession session,
-                                  Model model) {
+    public String purchaseCart(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login"; // 未ログインならログインページへ
+            return "redirect:/login";
         }
 
-        // ログイン済みなら購入処理を続行
-        Product product = productService.getProductById(productId);
-        purchaseHistoryService.savePurchase(userId, productId, quantity);
-        product.setQuantity(product.getQuantity() - quantity);
-        productService.updateProduct(product);
+        Cart cart = cartService.getOrCreateCart(userId);
+        List<CartProduct> cartProducts = cartService.getCartProducts(userId);
 
-        model.addAttribute("product", product);
-        model.addAttribute("quantity", quantity);
+        for (CartProduct cp : cartProducts) {
+            Product product = cp.getProduct();
+            int quantity = cp.getQuantity();
+
+            if (product.getQuantity() < quantity) {
+                model.addAttribute("error", "在庫が不足しています: " + product.getProductName());
+                return "cart";
+            }
+
+            purchaseHistoryService.savePurchase(userId, product.getProductId(), quantity);
+            product.setQuantity(product.getQuantity() - quantity);
+            productService.updateProduct(product);
+        }
+
+        if (!cartProducts.isEmpty()) {
+            model.addAttribute("product", cartProducts.get(0).getProduct());
+        }
+
         return "purchase-complete";
     }
 

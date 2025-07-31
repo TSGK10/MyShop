@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserMapper {
-    @Select("SELECT user_id, password, last_name, first_name FROM users WHERE user_id = #{userId}")
+    @Select("SELECT user_id, password, last_name, first_name FROM user WHERE user_id = #{userId}")
     @Results({
             @Result(property = "userId", column = "user_id"),
             @Result(property = "password", column = "password"),

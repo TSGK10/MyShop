@@ -17,7 +17,6 @@
     <input type="hidden" name="productId" th:value="${product.productId}" />
     <label>数量:</label>
     <input type="number" name="quantity" min="1" th:attr="max=${product.quantity}" required>
-
     <button type="submit">購入する</button>
   </form>
 

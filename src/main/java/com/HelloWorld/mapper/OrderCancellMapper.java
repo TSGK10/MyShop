@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface OrderCancellationMapper {
+public interface OrderCancellMapper {
 
     @Insert("""
-        INSERT INTO order_cancellations (order_id, user_id, reason, cancelled_at)
+        INSERT INTO order_cancel (order_id, user_id, reason, cancelled_at)
         VALUES (#{orderId}, #{userId}, #{reason}, #{cancelledAt})
     """)
     @Results({
@@ -20,7 +20,7 @@ public interface OrderCancellationMapper {
     })
     void insert(OrderCancellation cancellation);
 
-    @Select("SELECT * FROM order_cancellations WHERE user_id = #{userId}")
+    @Select("SELECT * FROM order_cancel WHERE user_id = #{userId}")
     @Results({
         @Result(property = "id", column = "id"),
         @Result(property = "orderId", column = "order_id"),

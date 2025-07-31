@@ -6,6 +6,8 @@
       <a th:href="@{/purchase-history}">購入履歴</a>
       |
       <a th:href="@{/logout}">ログアウト</a>
+      |
+      <a th:href="@{/cart}">カート</a>
     </span>
     <span th:if="${session.userId == null}">
       <a th:href="@{/login}">ログイン</a>

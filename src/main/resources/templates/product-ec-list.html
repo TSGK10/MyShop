@@ -20,6 +20,11 @@
             <p th:text="'価格: ¥' + ${product.salePrice}">価格</p>
             <p th:text="'在庫数: ' + ${product.quantity}">在庫数</p>
             <a th:href="@{'/products/detail/' + ${product.productId}}">詳細を見る</a>
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" th:name="productId" th:value="${product.productId}" />
+                <input type="number" name="quantity" value="1" min="1" />
+                <button type="submit">カートに追加</button>
+            </form>
         </div>
         <a th:href="@{/products}">
             <button type="button">商品一覧にもどる</button>

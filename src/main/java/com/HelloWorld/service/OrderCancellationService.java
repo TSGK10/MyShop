@@ -1,6 +1,6 @@
 package com.HelloWorld.service;
 
-import com.HelloWorld.mapper.OrderCancellationMapper;
+import com.HelloWorld.mapper.OrderCancellMapper;
 import com.HelloWorld.model.OrderCancellation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 public class OrderCancellationService {
 
     @Autowired
-    private OrderCancellationMapper mapper;
+    private OrderCancellMapper mapper;
 
     @Transactional
     public void cancelOrder(Long orderId, Integer userId, String reason) {
